@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuiz } from '../hooks/useQuiz';
 import { useSpeech } from '../hooks/useSpeech';
-import { useUser } from '../context/UserContext';
 import { AppShell } from '../components/shared/AppShell';
 import { Card } from '../components/ui/Card';
 import { WordInput } from '../components/shared/WordInput';
@@ -14,7 +13,6 @@ export default function CheckMode() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const grade = searchParams.get('grade') || 'year1';
-  const { currentStudent } = useUser();
   const quiz = useQuiz(grade, 10);
   const { supported, speaking, speak, cancel } = useSpeech();
   const [input, setInput] = useState('');
@@ -27,7 +25,7 @@ export default function CheckMode() {
       const t = setTimeout(() => speak(sentence), 400);
       return () => clearTimeout(t);
     }
-  }, [quiz.state, quiz.currentWord?.id, supported]);
+  }, [quiz.state, quiz.states.PLAYING, quiz.currentWord, supported, speak]);
 
   // Auto-navigate on complete
   useEffect(() => {
@@ -44,7 +42,7 @@ export default function CheckMode() {
         }
       });
     }
-  }, [quiz.state]);
+  }, [quiz.state, quiz.states.COMPLETE, navigate, quiz.results, quiz.correctCount, quiz.totalWords, quiz.scorePercent, quiz.durationSeconds, grade]);
 
   const handleSubmit = (val) => {
     cancel();

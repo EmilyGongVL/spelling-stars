@@ -34,7 +34,7 @@ export default function ResultsSummary() {
       };
       saveSession(currentStudent.id, session);
     }
-  }, []);
+  }, [correctCount, currentStudent, durationSeconds, grade, mode, results, saveSession, scorePercent, totalWords]);
 
   const starMessages = {
     3: '⭐ Amazing! Perfect spelling! ⭐',

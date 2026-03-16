@@ -16,6 +16,7 @@ export function useQuiz(yearKey, wordCount = 10) {
   const [hintsUsed, setHintsUsed] = useState(0);
   const [lastCorrect, setLastCorrect] = useState(null);
   const [attempt, setAttempt] = useState('');
+  const [durationSeconds, setDurationSeconds] = useState(0);
   const startTimeRef = useRef(null);
   const sessionStartRef = useRef(null);
 
@@ -54,6 +55,9 @@ export function useQuiz(yearKey, wordCount = 10) {
   const nextWord = useCallback(() => {
     const next = currentIndex + 1;
     if (next >= words.length) {
+      setDurationSeconds(sessionStartRef.current
+        ? Math.round((Date.now() - sessionStartRef.current) / 1000)
+        : 0);
       setState(STATES.COMPLETE);
     } else {
       setCurrentIndex(next);
@@ -77,14 +81,12 @@ export function useQuiz(yearKey, wordCount = 10) {
     setHintsUsed(0);
     setLastCorrect(null);
     setAttempt('');
+    setDurationSeconds(0);
   }, []);
 
   const currentWord = words[currentIndex] || null;
   const correctCount = results.filter(r => r.correct).length;
   const scorePercent = results.length > 0 ? Math.round((correctCount / results.length) * 100) : 0;
-  const durationSeconds = sessionStartRef.current
-    ? Math.round((Date.now() - sessionStartRef.current) / 1000)
-    : 0;
 
   return {
     state,

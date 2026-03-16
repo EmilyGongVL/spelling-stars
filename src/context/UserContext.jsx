@@ -1,18 +1,17 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 const UserContext = createContext(null);
 
 export function UserProvider({ children }) {
-  const [currentStudent, setCurrentStudent] = useState(null);
-  const [isParent, setIsParent] = useState(false);
-
-  // Restore from sessionStorage
-  useEffect(() => {
-    const stored = sessionStorage.getItem('currentStudent');
-    if (stored) {
-      try { setCurrentStudent(JSON.parse(stored)); } catch {}
+  const [currentStudent, setCurrentStudent] = useState(() => {
+    try {
+      const stored = sessionStorage.getItem('currentStudent');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
     }
-  }, []);
+  });
+  const [isParent, setIsParent] = useState(false);
 
   const selectStudent = (student) => {
     setCurrentStudent(student);
@@ -39,6 +38,7 @@ export function UserProvider({ children }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useUser() {
   return useContext(UserContext);
 }

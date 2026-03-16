@@ -20,7 +20,7 @@ export default function LearnMode() {
 
   // Clear active indicator when speech ends
   useEffect(() => {
-    if (!speaking) setActiveAudio(null);
+    if (!speaking) setActiveAudio(null); // eslint-disable-line react-hooks/set-state-in-effect
   }, [speaking]);
 
   const speakWord = () => {
@@ -38,12 +38,12 @@ export default function LearnMode() {
   const goNext = useCallback(() => {
     cancel();
     setIndex((i) => Math.min(i + 1, words.length - 1));
-  }, [words.length]);
+  }, [cancel, words.length]);
 
   const goPrev = useCallback(() => {
     cancel();
     setIndex((i) => Math.max(i - 1, 0));
-  }, []);
+  }, [cancel]);
 
   useEffect(() => {
     const handleKey = (e) => {
