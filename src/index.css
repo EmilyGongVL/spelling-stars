@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 @import "tailwindcss";
 
+:root {
+  --app-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
 body {
   font-family: 'Nunito', sans-serif;
   font-size: 20px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--app-gradient);
 }
 
 .word-display {

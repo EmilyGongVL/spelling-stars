@@ -6,7 +6,7 @@ export function AppShell({ children, title, showBack = true }) {
   const { currentStudent, isParent, logout } = useUser();
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: 'var(--app-gradient, linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%))' }}>
       <nav className="flex items-center justify-between px-4 py-3 bg-white/10 backdrop-blur no-print" aria-label="App navigation">
         <div className="flex items-center gap-3">
           {showBack && (

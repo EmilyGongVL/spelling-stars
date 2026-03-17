@@ -45,7 +45,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ background: 'var(--app-gradient, linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%))' }}>
       <div className="w-full max-w-lg">
         <div className="text-center mb-8">
           <div className="text-7xl mb-4">✏️</div>
