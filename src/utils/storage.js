@@ -45,6 +45,12 @@ export function appendSession(studentId, session) {
   saveData(data);
 }
 
+export function deleteStudent(studentId) {
+  const data = getData();
+  delete data.students[studentId];
+  saveData(data);
+}
+
 export function getParentPin() {
   return getData().parentPin;
 }

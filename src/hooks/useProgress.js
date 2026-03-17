@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { getData, getAllStudents, upsertStudent, appendSession } from '../utils/storage';
+import { getData, getAllStudents, upsertStudent, appendSession, deleteStudent as removeStudent } from '../utils/storage';
 
 export function useProgress() {
   const [, forceUpdate] = useState(0);
@@ -32,5 +32,10 @@ export function useProgress() {
     return data.students[id] || null;
   }, []);
 
-  return { students, createStudent, saveSession, getStudentData, refresh };
+  const deleteStudent = useCallback((studentId) => {
+    removeStudent(studentId);
+    refresh();
+  }, [refresh]);
+
+  return { students, createStudent, deleteStudent, saveSession, getStudentData, refresh };
 }

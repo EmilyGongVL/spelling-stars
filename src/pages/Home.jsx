@@ -13,9 +13,10 @@ const GRADES = ['year1','year2','year3','year4','year5','year6'];
 export default function Home() {
   const navigate = useNavigate();
   const { selectStudent, enterParentMode } = useUser();
-  const { students, createStudent } = useProgress();
+  const { students, createStudent, deleteStudent } = useProgress();
   const [showCreate, setShowCreate] = useState(false);
   const [showPin, setShowPin] = useState(false);
+  const [confirmRemove, setConfirmRemove] = useState(null);
   const [newName, setNewName] = useState('');
   const [newGrade, setNewGrade] = useState('year1');
   const [newAvatar, setNewAvatar] = useState('🐶');
@@ -57,15 +58,23 @@ export default function Home() {
             <h2 className="text-xl font-black text-gray-700 mb-3">Who are you?</h2>
             <div className="grid grid-cols-2 gap-3">
               {students.map(s => (
-                <button
-                  key={s.id}
-                  onClick={() => handleSelectStudent(s)}
-                  className="flex flex-col items-center gap-2 bg-indigo-50 hover:bg-indigo-100 border-2 border-indigo-200 rounded-2xl p-4 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-400 min-h-[100px]"
-                >
-                  <span className="text-4xl">{s.avatar}</span>
-                  <span className="font-black text-lg text-gray-800">{s.name}</span>
-                  <span className="text-sm text-gray-500">{s.grade?.replace('year', 'Year ')}</span>
-                </button>
+                <div key={s.id} className="relative">
+                  <button
+                    onClick={() => handleSelectStudent(s)}
+                    className="w-full flex flex-col items-center gap-2 bg-indigo-50 hover:bg-indigo-100 border-2 border-indigo-200 rounded-2xl p-4 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-400 min-h-[100px]"
+                  >
+                    <span className="text-4xl">{s.avatar}</span>
+                    <span className="font-black text-lg text-gray-800">{s.name}</span>
+                    <span className="text-sm text-gray-500">{s.grade?.replace('year', 'Year ')}</span>
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setConfirmRemove(s); }}
+                    className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-red-100 hover:bg-red-200 text-red-500 text-xs font-black leading-none focus:outline-none focus:ring-2 focus:ring-red-400"
+                    aria-label={`Remove ${s.name}`}
+                  >
+                    ✕
+                  </button>
+                </div>
               ))}
             </div>
             <button
@@ -138,6 +147,28 @@ export default function Home() {
             Let's go! {newAvatar}
           </Button>
         </div>
+      </Modal>
+
+      {/* Confirm Remove Modal */}
+      <Modal open={!!confirmRemove} onClose={() => setConfirmRemove(null)} title="Remove Student">
+        {confirmRemove && (
+          <div className="space-y-4">
+            <p className="text-gray-700 text-base">
+              Are you sure you want to remove <span className="font-black">{confirmRemove.avatar} {confirmRemove.name}</span>? All their progress will be deleted.
+            </p>
+            <div className="flex gap-3">
+              <Button size="lg" onClick={() => setConfirmRemove(null)} className="flex-1 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                Cancel
+              </Button>
+              <button
+                onClick={() => { deleteStudent(confirmRemove.id); setConfirmRemove(null); }}
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white font-black text-lg rounded-2xl px-4 py-3 transition-all focus:outline-none focus:ring-4 focus:ring-red-400"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        )}
       </Modal>
 
       {/* Parent PIN Modal */}
