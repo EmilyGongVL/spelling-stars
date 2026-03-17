@@ -65,7 +65,7 @@ export default function LearnMode() {
           <Button variant="ghost" onClick={goPrev} disabled={index === 0} className="text-lg font-bold">
             ← Prev
           </Button>
-          <span className="text-sm font-bold text-gray-500 tracking-wide uppercase">
+          <span className="text-sm font-bold text-white tracking-wide uppercase">
             {index + 1} / {words.length}
           </span>
           <Button variant="ghost" onClick={goNext} disabled={index === words.length - 1} className="text-lg font-bold">
