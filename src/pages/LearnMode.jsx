@@ -76,7 +76,7 @@ export default function LearnMode() {
         <Card className="space-y-5">
 
           {/* Word + word audio */}
-          <div className="flex items-center justify-between gap-4 pb-5 border-b border-gray-100">
+          <div className="flex items-center justify-between gap-4">
             <span className="text-5xl font-black text-teal-700 tracking-wide leading-none">
               {currentWord.word}
             </span>
@@ -94,6 +94,23 @@ export default function LearnMode() {
                 🔊
               </button>
             )}
+          </div>
+
+          {/* Definition + synonyms */}
+          <div className="pb-5 border-b border-gray-100 space-y-2">
+            <p className="text-base text-gray-700 leading-snug">
+              {currentWord.definition}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {currentWord.synonyms.map((syn) => (
+                <span
+                  key={syn}
+                  className="text-sm font-semibold text-teal-700 bg-teal-50 border border-teal-200 rounded-full px-3 py-0.5"
+                >
+                  {syn}
+                </span>
+              ))}
+            </div>
           </div>
 
           {/* Sentence + sentence audio */}
