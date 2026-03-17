@@ -69,7 +69,7 @@ export default function Home() {
                   </button>
                   <button
                     onClick={(e) => { e.stopPropagation(); setConfirmRemove(s); }}
-                    className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-red-100 hover:bg-red-200 text-red-500 text-xs font-black leading-none focus:outline-none focus:ring-2 focus:ring-red-400"
+                    className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-white hover:bg-gray-200 text-gray-500 text-xs font-black leading-none focus:outline-none focus:ring-2 focus:ring-gray-400"
                     aria-label={`Remove ${s.name}`}
                   >
                     ✕
